@@ -21,10 +21,13 @@ class InfoRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {
-        return [
-            'name'=>['nullable', 'max:100'],
-            'file'=> ['nullable',  File::image()]
-        ];
-    }
+{
+    return [
+        'name' => ['nullable', 'max:100'],
+        'file' => ['nullable', 'required_with:name', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
+    ];
+}
+
+
+    
 }

@@ -20,14 +20,22 @@ class InfoController extends Controller
 
     public  function store(InfoRequest $request)
     {
-        $fileName = time().'.'.$request->file->extension();
-        $request->file->move(public_path('images'), $fileName);
 
+        $file = $request->file('file');
+
+    if ($file) {
+        // El archivo está presente, puedes acceder a sus propiedades
+        $fileName = time().'.'.$file->extension();
+        $file->move(public_path('images'), $fileName);
+        
         $info = new Info;
         $info->name = $request->name; 
         $info->file_uri = $fileName;
         $info->save();
+    } else {
+         // El archivo no está presente
+         var_dump("No file");
+    }
 
-        return redirect()->route('index');
     }
 }
